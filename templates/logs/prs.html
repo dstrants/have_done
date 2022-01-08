@@ -1,0 +1,30 @@
+
+{% for pr in prs %}
+    <div class='pr d-flex mb-3' style='height: 30px;'>
+        <div class="pr_icon mr-2">
+            <i class="fab fa-github fa-2x text-success gh"></i>
+        </div>
+        <div class="pr_title flex-fill">
+            <a target="_blank" class='text-primary' href="{{pr.html_url}}">{{pr.title}}</a>
+            <strong>/{{pr.repo_name}}</strong>
+        </div>
+        <div class="c-avatar" style="float: right; width: 24px; height: 24px;">
+            <img class='c-avatar-img' src="{{pr.user_url}}" alt="">
+        </div>
+    </div>
+{% empty %}
+<p><i>No pending prs found on your repositories</i></p>
+{% endfor %}
+
+{% block script %}
+<script>
+$(document).ready(function(){
+    $('.pr .pr_title a').hover(function(){
+        $(this).parent().parent().find('.gh').attr('data-icon', 'code-branch').attr('data-prefix', 'fas')
+    })
+    $('.pr .pr_title a').mouseout(function(){
+        $(this).parent().parent().find('.gh').attr('data-icon', 'github').attr('data-prefix', 'fab')
+    })
+})
+</script>
+{% endblock script %}

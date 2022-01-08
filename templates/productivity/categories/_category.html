@@ -1,0 +1,23 @@
+{% for cat in categories %}
+    <li data-category-id="{{cat.id}}" class="category">
+        <span data-action="click->categories#updateView" data-field="name">
+            <h6 class="label_text">Name</h6>
+            {{cat.name}}
+        </span>
+        <span data-action="click->categories#showEmojiPicker" data-field="emoji">
+            <h6 class="label_text">Emoji</h6>
+            {{cat.emoji}}
+        </span>
+        <span>
+            <h6 class="label_text">Tasks</h6>
+            <i class="fas fa-check"></i>
+            {{cat.tasks_count}}
+        </span>
+        <span>
+            <h6 class="label_text">Delete</h6>
+            <button class="btn btn-link text-danger" data-action="categories#deleteCategory">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </span>
+    </li>
+{% endfor %}

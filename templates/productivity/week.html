@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div data-controller="week">
+    <div class="row my-lg-4 my-md-2 week_stats" style="order: 1">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-value-lg">{{stats.task_count}}</div>
+                    <div>Total Tasks</div>
+                    <div class="progress progress-xs my-2">
+                        <div class="progress-bar bg-gradient-info" role="progressbar"
+                            style="width: {{stats.task_count_ratio}}%" aria-valuenow="{{stats.task_count}}"
+                            aria-valuemin="0" aria-valuemax="25"></div>
+                    </div><small class="text-muted">You have a target of at least 25 tasks per week</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-4" style="order: 2">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="small text-uppercase font-weight-bold" style="color: #{{stats.max_project.0.color}}">
+                        {{stats.max_project.0.name}}</div>
+                    <div class="text-value-xl py-3">{{stats.max_project.1}}</div>
+                    <div class="c-chart-wrapper mx-auto" style="height:40px;width:80px" id="sparkline-project"
+                         data-week-series="{% for i in stats.counts_pro %} {{i}}, {% endfor%}" data-week-legend='tasks per project' 
+                         data-week-categories="{% for pro in stats.projects%} {{pro}}, {%endfor%}"
+                         data-week-target="plot">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-4" style="order: 3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="text-muted small text-uppercase font-weight-bold">{{stats.max_category.0.emoji}}
+                        {{stats.max_category.0.name}}</div>
+                    <div class="text-value-xl py-3">{{stats.max_category.1}}</div>
+                    <div class="c-chart-wrapper mx-auto" style="height:40px;width:80px" id="sparkline-categories"
+                         data-week-series="{% for i in stats.counts_cat %} {{i}}, {% endfor%}" data-week-legend='tasks per category' 
+                         data-week-categories="{% for cat in stats.projects%} {{cat}}, {%endfor%}"
+                         data-week-target="plot">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-4" style="order: 4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="text-muted small text-uppercase font-weight-bold">{{stats.max_day.0}}</div>
+                    <div class="text-value-xl py-3">{{stats.max_day.1}}</div>
+                    <div class="c-chart-wrapper mx-auto" style="height:40px;width:80px" id="sparkline-days"
+                         data-week-series="{% for i in stats.counts_array %} {{i}}, {% endfor%}" 
+                         data-week-legend='tasks per day' 
+                         data-week-categories="['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']"
+                         data-week-target="plot">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-group my-2">
+        {% for day, tasks in stats.days.items %}
+        <div class="card {% if forloop.first or forloop.last %} weekend hidden {% endif %}" {% if forloop.first or forloop.last %} data-week-target='weekendDays' {% endif %} {% if forloop.first %}
+            style="order: 2" {% endif %}>
+            <h2 class='card-header'>{{day}}</h2>
+            <div class="card-body">
+                <ul class='list-unstyled'>
+                    {% for task in tasks %}
+                    {% if task.category.name == 'Task' %}
+                    {% ifchanged task.category_id %}
+                    <br>
+                    {% endifchanged %}
+                    {% endif %}
+
+                    <li> {{task.category.emoji}}
+                        <span class="tsk-text" style="display: inline-block;">
+                            {{task.rich_text|safe}}
+                        </span>
+
+                        {% if task.project %}
+                        <strong style='color: #{{task.project.color}}' class='project'>
+                            {{task.project}}
+                        </strong>
+                        <span class='addons ml-3 d-inline-block'>
+                            {% if task.taskaddon_set.all %}
+                                {% for addon in task.taskaddon_set.all %}
+                                <a target="_blank" href='{{addon.url}}' class="addon py-0">
+                                    <img class='simpleicon' data-action='load->tasks#fixSimpleIconColor' data-color="#{{addon.provider.color}}"
+                                        height="16" width="16"
+                                        src="https://unpkg.com/simple-icons@v2/icons/{{addon.provider.icon}}.svg" />
+                                </a>
+                                {% endfor %}
+                            {% endif %}
+                        </span>
+                        <hr>
+                        {% ifchanged task.category_id %}
+                        <br>
+                        {% endifchanged %}
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card-footer">Tasks: <strong>{{tasks.count}}</strong> </div>
+        </div>
+        {% endfor %}
+    </div>
+    <button id='weekdays' class='btn btn-primary btn-refresh' data-action="click->week#toggleWeekends" data-toggle="tooltip" data-placement="left"
+        title="Include Weekends?">
+        <i class="fas fa-calendar"></i>
+    </button>
+    <a href="{% url 'prod:this_week' %}?week_no={{week_no|add:"-1"}}" class="btn btn-pill-primary nav-button previous">
+        <i class="fas fa-chevron-left fa-2x"></i>
+    </a>
+    <a href="{% url 'prod:this_week' %}?week_no={{week_no|add:"1" }}" class="btn btn-pill-primary nav-button next">
+        <i class="fas fa-chevron-right fa-2x"></i>
+    </a>
+</div>
+{% endblock content %}

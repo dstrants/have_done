@@ -1,0 +1,76 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:12
+    restart: unless-stopped
+    env_file:
+      - '.env'
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  web:
+    build: .
+    command: bash -c "python manage.py migrate && gunicorn backups.wsgi:application --reload --timeout 60 -w 2 -b :8000"
+    container_name: backups
+    restart: unless-stopped
+    expose:
+      - "8000"
+    env_file:
+      - '.env'
+    links:
+      - db:db
+    volumes:
+      - .:/app
+  nginx:
+    restart: unless-stopped
+    build: nginx/.
+    image: backups_nginx
+    ports:
+      - "84:443"
+      - "83:80"
+    volumes:
+      - .:/app
+    links:
+      - web:web
+  dramatiq:
+    build: .
+    image: backups_web
+    command: bash -c "python manage.py rundramatiq"
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    env_file:
+      - '.env'
+    links:
+      - db:db
+  periodiq:
+    build: .
+    image: backups_web
+    command: bash -c "python manage.py runperiodiq"
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - dramatiq
+    env_file:
+      - '.env'
+    links:
+      - db:db
+  redis:
+    restart: unless-stopped
+    image: redis
+  node:
+    # build: .
+    image: node:15
+    restart: unless-stopped
+    command: bash -c "cd /app && yarn start --host 0.0.0.0"
+    volumes:
+      - .:/app/
+    ports:
+      - 8080:8080
+
+volumes:
+  db_data:

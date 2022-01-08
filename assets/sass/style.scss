@@ -1,0 +1,12 @@
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles
+@import "../../node_modules/@coreui/coreui/scss/coreui.scss";
+
+@import "../../node_modules/noty/src/noty.scss";
+@import "../../node_modules/noty/src/themes/sunset.scss";
+
+// If you want to add something do it here
+@import "custom";
+@import "projects"

@@ -1,0 +1,162 @@
+{% extends '_card.html' %}
+
+{% load profile_extras %}
+
+{% block title %} Settings {% endblock title %}  
+
+{% block card_body %}
+<p class="help">
+Please enable the integrations you want to use inside the app
+</p>
+
+<div data-controller="prefs">
+    <form action="" method="post" >
+        {% csrf_token %}
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        Todoist
+                    </td>
+                    <td>
+                        <label class="c-switch c-switch-pill c-switch-success">
+                            <input type="checkbox" name="{{form.todoist.html_name}}" class="c-switch-input"
+                                    data-target="toggleInputs" data-action="prefs#providers"
+                                    {% if form.todoist.value %}checked{% endif %}>
+                            <span class="c-switch-slider"></span>
+                        </label>    
+                    </td>
+                    <td class="{% if not form.todoist.value %}hidden{% endif %}" data-target='providers' data-provider='todoist'>
+                        {% has_usa user "todoist" as todoist %}
+                        {% if not todoist %}
+                            {% include "profiles/_todoist.html" %}
+                        {% else %}
+                        <span class='ml-2 my-1'>
+                            logged in
+                            <a href="" class="text-danger">Remove</a>
+                        </span>
+
+                        {% endif %}
+                    </td>
+                </tr>
+                    <tr>
+                        <td>Gmail</td>
+                        <td>
+                            <label class="c-switch c-switch-pill c-switch-success">
+                                <input type="checkbox" name="{{form.gmail.html_name}}" class="c-switch-input"
+                                data-target="toggleInputs" data-action="prefs#providers"
+                                {% if form.gmail.value %}checked{% endif %}>
+                                <span class="c-switch-slider"></span>
+                            </label>
+                        </td>
+                        <td class="{% if not form.gmail.value %}hidden{% endif %}" data-target='providers' data-provider='google-oauth2'>
+                            {% has_usa user "google-oauth2" as google %}
+                            {% if not google %}
+                                {% include "profiles/_google.html" %}
+                            {% else %}
+                                <span class='ml-2 my-1'>
+                                    logged in
+                                    <a href="" class="text-danger">Remove</a>
+                                    <a href="{% url 'social:begin' 'google-oauth2' %}?next=/profile/settings" class="text-info">Add another</a>
+                                </span>
+
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Google Calendar</td>
+                        <td class="p-2">
+                            <label class="c-switch c-switch-pill c-switch-success">
+                                <input type="checkbox" name="{{form.gcalendar.html_name}}" class="c-switch-input"
+                                       data-target="toggleInputs" data-action="prefs#providers"
+                                       {% if form.gcalendar.value %}checked{% endif %}>
+                                <span class="c-switch-slider"></span>
+                            </label>
+                        </td>
+                        <td class="{% if not form.gcalendar.value %}hidden{% endif %} p-2" data-target='providers' data-provider='google-oauth2'>
+                            {% if not google %}
+                                {% include "profiles/_google.html" %}
+                            {% else %}
+                                <span class='ml-2 my-1'>
+                                    logged in
+                                    <a href="" class="text-danger">Remove</a>
+                                </span>
+
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Github</td>
+                        <td>
+                            <label class="c-switch c-switch-pill c-switch-success">
+                                <input type="checkbox" name="{{form.gh_pr.html_name}}" class="c-switch-input"
+                                       data-target="toggleInputs" data-action="prefs#providers"
+                                       {% if form.gh_pr.value %}checked{% endif %}>
+                                <span class="c-switch-slider"></span>
+                            </label>
+                        </td>
+                        <td class="{% if not form.github.value %}hidden{% endif %}" 
+                            
+                        data-target='providers' data-provider='github'>
+                            {% has_usa user "github" as github %}
+                            {% if not github %}
+                                {% include "profiles/_github.html" %}
+                            {% else %}
+                                <span class='ml-2 my-1'>
+                                    logged in
+                                    <a href="" class="text-danger">Remove</a>
+                                </span>
+
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Uptime Robot</td>
+                        <td>
+                            <label class="c-switch c-switch-pill c-switch-success">
+                                <input type="checkbox" name="{{form.uptime_robot.html_name}}" class="c-switch-input"
+                                       data-target="toggleInputs" data-action="prefs#providers"
+                                       {% if form.uptime_robot.value %}checked{% endif %}>
+                                <span class="c-switch-slider"></span>
+                            </label>
+                        </td>
+                        <td class="{% if not form.uptime.value %}hidden{% endif %}" class="my-3" data-target='providers' data-provider='uptimerobot'>
+                            {% has_usa user "uptimerobot" as uptime %}
+                            {% if not uptime %}
+                                {% include "profiles/_uptimerobot.html" %}
+                            {% else %}
+                                <span class='ml-2 my-1'>
+                                    logged in
+                                    <a href="" class="text-danger">Remove</a>
+                                </span>
+
+                            {% endif %}
+                        </td>
+                    </tr>
+                <tr>
+                </tr>
+            </tbody>
+        </table>
+        <input type="submit" value='Save' class='btn btn-primary float-right'>
+    </form>
+    <h2 class="mt-4 mb-3">API Token</h2>
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <input type="text" class="form-control d-inline-block" readonly value="{{user.profile.token}}" data-target='prefs.token'>
+        </div>
+        <div class="col d-inline-flex">
+            <button class="btn btn-info" data-action="prefs#toggleToken"><i class="fas fa-eye"></i></button>
+            <button class="btn btn-primary ml-3" data-action="prefs#copyToken"><i class="fas fa-copy"></i></button>
+            <button class="btn btn-success ml-3" data-action="prefs#refreshToken"><i class="fas fa-sync"></i></button>
+        </div>
+        <div class="col">
+            <span class="ml-3 p-1 text-info" data-target="prefs.message" style='font-style: italic;'></span>
+        </div>
+    </div>
+    
+</div>
+
+
+
+
+{% endblock card_body %}

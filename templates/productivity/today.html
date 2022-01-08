@@ -1,0 +1,89 @@
+{% extends "base.html"  %}
+
+{% block content %}
+<div data-controller='tasks' class="row my-5 justify-content-center">
+  <div class="col-md-12 col-lg-8">
+    <div class="card">
+      <div class="card-header">
+        <span id='titleDate'>
+          Tasks List
+        </span>
+        {% if ctx == 'today' %}
+          <div class="input-group float-right w-25">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="fas fa-calendar"></i>
+              </span>
+            </div>
+            <input type="text" name="date" id="datepicker" class="form-control">
+          </div>
+        {% endif %}
+      </div>
+      <div class="card-body tasks" id='tasks' fetch='{{ctx}}'>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="category_modal" tabindex="-1" role="dialog" aria-labelledby="categoryModal"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="CategoryModalTitle">New Category</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label for="category_emoji">Choose an Emoji 😀 <kbd>ctrl</kbd> + <kbd>cmd</kbd> + <kbd>space</kbd> or
+            <kbd>win</kbd> + <kbd>.</kbd></label>
+          <div class="form-row my-2">
+            <div class="form-group col-md-2">
+              <label for="category_emoji">Emoji</label>
+              <input class='form-control' type="text" name="emoji" id="category_emoji" style='width: 40px;'
+                placeholder="😀">
+            </div>
+            <div class="form-group col-md-10">
+              <label for="category_name">Name</label>
+              <input class='form-control' type="text" name="name" id="category_name" placeholder='Category Name'>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-action='tasks#createCategory'>Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="project_modal" tabindex="-1" role="dialog" aria-labelledby="projectModal"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ProjectModalTitle">New Project</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-row my-2">
+            <div class="form-group col-md-6">
+              <label>Color</label>
+              <input class='form-control' type="text" placeholder="#5f43de" name="color" id="project_color">
+            </div>
+            <div class="form-group col-md-6">
+              <label>Name</label>
+              <input class='form-control' type="text" name="name" id="project_name" placeholder='Project Name'>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" data-dismiss="modal" class="btn btn-primary" data-action="tasks#createProject">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,6 @@
+<select class="field-container" name="project" id="project_update" data-action='tasks#taskFastUpdate' data-field='project_id'>
+    <option disabled selected value>project</option>
+{% for project in projects %}
+    <option value="{{project.id}}" style='color: #{{project.color}}'>#{{project.name}}</option>
+{% endfor %}
+</select>

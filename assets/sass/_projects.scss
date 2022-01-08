@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Code:300,400,500,600,700&display=swap');
+
+.projects, .categories{
+    list-style: none;
+    padding-left: 0;
+    .project, .category{
+        display: grid;
+        // name - color - is_active - repos - tasks - delete
+        grid-template-columns: 30% 30% 20% 7% 7% 6%;
+
+        padding: 1rem;
+        box-shadow: 5px 5px #f4f4f4;
+        border-radius: 10px;
+        border: 1px solid #f1f1f1;
+        margin: 10px 0;
+        font-size: 1rem;
+        font-weight: bold;
+
+        &:hover{
+            padding: 1.1rem;
+            font-size: 1.05rem;
+            .label_text{
+                display: block;
+            }
+            
+        }
+        span {
+            .label_text{
+                display: none;
+                color: gray;
+                margin-bottom: 2px;
+                margin-top: -10px;
+            }
+            &.activeness{
+                max-height: 40px;
+            }
+        }
+
+    }
+}

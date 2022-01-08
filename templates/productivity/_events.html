@@ -1,0 +1,33 @@
+
+{% load productivity_extras %}
+{% for event in events %}
+<style>
+.event_grid{
+    display: inline-grid;
+    grid-template-row: auto auto;
+}
+</style>
+
+<li style="margin: 10px;">
+    <span class="fa-layers fa-fw" style='margin-right: 10px; top: 8px'>
+        <i class="fas fa-calendar fa-2x"></i>
+        <span class="fa-layers-text fa-inverse" data-fa-transform="right-3 down-3"  style="font-weight:700">{{event.start.dateTime|day_of_date}}</span>
+    </span>
+    <span class='event_grid'>
+        <span class='title_link'>    
+            <strong>
+                <a href="{{event.htmlLink}}" style='color: inherit; text-decoration: none'>{{event.summary}}</a>  
+            </strong>
+        </span>
+        <span class="event_info">
+            <i class="fas fa-map-marker"></i>
+            {{event.location|truncatechars:33}}
+            <i class="fas fa-users"></i> {{event.attendees|length}}
+            <i class='text-primary'>{{event.organizer.email}}</i>
+        </span>
+    </span>
+</li>
+
+{% empty %}
+<li><i>No events found</i></li>
+{% endfor %}

@@ -1,0 +1,21 @@
+<ul class='uptime'>
+    {% for monitor in monitors.monitors %}
+        <li><strong>{{monitor.friendly_name}}: </strong> 
+            <span data-status="{{monitor.status}}" data-toggle="tooltip" data-placement="top" title="test">
+                <i class="fas fa-circle {%if monitor.status == 2  %} text-success {%elif monitor.status > 7 %} text-danger {%else%} text-warning {%endif%}">
+                </i>
+            </span>
+        </li>
+    {% endfor %}
+</ul>
+
+<script>
+statuses = {"0": "paused", "1": "not check yet", "2": "up", "8": "seems down", "9": "down"}
+function set_tooltip(){
+    console.log($(this))
+    $(this).title = statuses[$(this).dataset.status]
+}
+$('ul.uptime li span').each(function() {
+    this.title = statuses[this.dataset.status]
+})
+</script>

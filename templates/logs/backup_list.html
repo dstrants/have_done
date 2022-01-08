@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-9 col-md-12" style='margin-top: 50px;'>
+  <div class="card">
+    <div class="card-header">Bakcups Logs</div>
+    <div class="card-body">
+        <table class="table table-hover table-sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>App</th>
+              <th>Server</th>
+              <th># Files</th>
+              <th>Files Size</th>
+              <th>Logs Url</th>
+              <th>Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for obj in object_list %}
+            <tr>
+              <td>{{obj.pk}}</td>
+              <td>{{obj.app}}</td>
+              <td>{{obj.server}}</td>
+              <td>{{obj.total_files}}</td>
+              <td>{{obj.total_size}}</td>
+              <td>
+                <a href="{{obj.log}}">Dropox link</a>
+              </td>
+              <td>{{obj.created_at}}</td>
+            </tr>
+            
+            {% endfor %}
+          </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page=1" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item"><a class="page-link" href="?page={{page_obj.previous_page_number}}">{{page_obj.previous_page_number}}</a></li>
+            {% endif %}
+            
+            <li class="page-item active"><a class="page-link" href="#">{{page_obj.number}}</a></li>
+            {% if page_obj.has_next %}
+              <li class="page-item"><a class="page-link" href="?page={{page_obj.next_page_number}}">{{page_obj.next_page_number}}</a></li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+    </div>
+  </div>
+
+</div>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+  $(document).ready( function () {
+      $('table.table').DataTable();
+  });
+</script>
+{% endblock script %}

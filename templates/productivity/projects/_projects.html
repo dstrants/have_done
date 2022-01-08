@@ -1,0 +1,37 @@
+{% for pro in projects %}
+    <li data-project-id="{{pro.id}}" class="project">
+        <span data-action="click->projects#updateView" style="color: #{{pro.color|default_if_none:"000000"}}">
+            <h6 class="label_text">Name</h6>
+            {{pro.name}}
+        </span>
+        <span style="color: #{{pro.color|default_if_none:"000000"}}">
+            <h6 class="label_text">Color</h6>
+            <input data-action="projects#updateItemColor" type="color" value="#{{pro.color|default_if_none:"00000"}}" class="input" id="pro_{{pro.id}}_color">
+            <label for="pro_{{pro.id}}_color">#{{pro.color}}</label>
+            <a data-action="projects#saveColor"><i class="fas fa-check-circle text-sucess ml-2"></i></a>
+        </span>
+        <span class="activeness">
+            <h6 class="label_text">Active</h6>
+            <label class="c-switch c-switch-pill c-switch-success" data-projects-target="labels" data-toggle="tooltip" title="Some tooltip text!">
+                <input data-action="projects#toggleActive" type="checkbox" class="c-switch-input" {% if pro.is_active %}checked{%endif%}> 
+                <span class="c-switch-slider"></span>
+            </label>
+        </span>
+        <span style="color: #{{pro.color|default_if_none:"000000"}}">
+            <h6 class="label_text">Repo</h6>
+            <i class="fab fa-github"></i>
+            {{pro.repos_count}}
+        </span>
+        <span style="color: #{{pro.color|default_if_none:"000000"}}">
+            <h6 class="label_text">Tasks</h6>
+            <i class="fas fa-check"></i>
+            {{pro.tasks_count}}
+        </span>
+        <span>
+            <h6 class="label_text">Delete</h6>
+            <button class="btn btn-link text-danger" data-action="projects#deleteProject">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </span>
+    </li>
+{% endfor %}

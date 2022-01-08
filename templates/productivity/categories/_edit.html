@@ -1,0 +1,3 @@
+{% load productivity_extras %}
+
+<input class='input' name="category" id="category_update" value='{{ cat|get_attr:field }}' data-action='keyup->categories#saveField' data-field='{{field}}'>

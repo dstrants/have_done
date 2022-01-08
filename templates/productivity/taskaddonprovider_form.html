@@ -1,0 +1,40 @@
+{% extends '_card.html' %}
+
+{% block title %} Settings {% endblock title %}  
+
+{% block card_body %}
+
+<form action="" method="post">
+{% csrf_token %}
+
+
+<div class="form-row align-items-center" data-controller='providers'>
+    <div class="col-auto m-2">
+        <label for="id_name">Name:</label>
+        <input type="text" value="{{object.name}}" name='name' maxlength='100' required id='id_name'>
+    </div>
+    <div class="col-auto m-2">
+        <label for="id_icon">Icon:</label>
+        <input type="text" value="{{object.icon}}" name='icon' maxlength='40' required id='id_icon' data-action='keyup->providers#getIcon'>
+        <span style='margin-left: 20px' id='icon_value'></span>
+    </div>
+    <div class="col-auto m-2">
+        <label for="id_color">Color:</label>
+        <input type="text" value="{{object.color}}" name='color' maxlength='8' required id='id_color' data-providers-target='color'>
+    </div>
+    <div class="col-auto m-2">
+        <label for="id_shortcut">Shortcut:</label>
+        <input type="text" value="{{object.shortcut}}" name='shortcut' maxlength='10' required id='id_shortcut'>
+    </div>
+    <div class="col-auto m-2">
+        <label for="id_base_url">Base URL:</label>
+        <input type="text" value="{{object.base_url}}" name='base_url' maxlength='200' required id='id_base_url'>
+    </div>
+    <div class="col-auto m-2">
+        <input type="submit" value="Save" class='btn btn-primary'>
+    </div>
+</div>
+
+</form>
+
+{% endblock card_body %}

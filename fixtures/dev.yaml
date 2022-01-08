@@ -1,0 +1,60 @@
+---
+- model: productivity.Project
+  pk: 1
+  fields:
+    name: default
+    color: 008000
+- model: productivity.Category
+  pk: 1
+  fields:
+    name: task
+    emoji: ✔️
+- model: productivity.Category
+  pk: 2
+  fields:
+    name: meeting
+    emoji: 👔
+- model: productivity.Category
+  pk: 3
+  fields:
+    name: call
+    emoji: 📞
+- model: productivity.Category
+  pk: 3
+  fields:
+    name: investigation
+    emoji: 👀
+- model: productivity.Category
+  pk: 3
+  fields:
+    name: chat
+    emoji: 💬
+- model: productivity.Category
+  pk: 3
+  fields:
+    name: mail
+    emoji: ✉️
+- model: productivity.TaskAddonProvider
+  pk: 1
+  fields:
+    name: todoist
+    icon: todoist
+    color: E44332
+    shortcut: todoist
+    base_url: https://todoist.com/showTask?id={task}
+- model: productivity.TaskAddonProvider
+  pk: 2
+  fields:
+    name: github
+    icon: github
+    color: 181717
+    shortcut: github
+    base_url: https://github.com/{task}
+- model: productivity.TaskAddonProvider
+  pk: 3
+  fields:
+    name: gmail
+    icon: gmail
+    color: ea4335
+    shortcut: gmail
+    base_url: https://mail.google.com/mail/u/0/#inbox/{task}

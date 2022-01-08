@@ -1,0 +1,37 @@
+<li class="tsk mt-2 ml-3" data-tasks-target='filterable' data-tasks-project="{{task.project.name}}" data-task="{{task.id}}">
+    <span class="category model-container" data-model='categories' data-action="click->tasks#updateView">
+    {{task.category.emoji}}
+    </span>
+    <span class="tsk-text"><a class="model-container" data-model='task/{{task.id}}' data-action="click->tasks#updateView">{{task.rich_text|safe}}</a></span>
+    <span class='project model-container' style='color: #{{task.project.color}}' data-model='projects' data-action="click->tasks#updateView">
+        {{task.project}}
+    </span>
+    {% if task.project.name == "default" %}
+        <small>
+            <a href="{% url 'prod:today' %}?date={{task.created_at.date|date:'Y-m-d'}}">{{task.datetime}}</a>
+        </small>
+    {% else %}
+        <small>{{task.time}}</small>
+    {% endif %}
+
+
+    <span class='addons ml-3 d-block'>
+        {% if task.taskaddon_set.all %}
+            {% for addon in task.taskaddon_set.all %}
+            <a target="_blank" href='{{addon.url}}' class="addon py-0">
+                <img class='simpleicon' data-action='load->tasks#fixSimpleIconColor' data-color="#{{addon.provider.color}}"
+                    height="16" width="16"
+                    src="https://unpkg.com/simple-icons@v2/icons/{{addon.provider.icon}}.svg" />
+            </a>
+            {% endfor %}
+        {% endif %}
+        <div class='d-inline-block w-50' data-controller="addons" data-url="{% url 'prod:task_addon' task.id %}">
+            <a class='addon py-0' data-action="click->addons#show">
+                <i class="fas fa-plus-circle text-primary"></i>
+            </a>
+            <a class='addon py-0 tsk-delete' data-action='click->tasks#deleteTask' data-taskid="{{task.id}}">
+                <i class="fas fa-times text-danger"></i>
+            </a>
+        </div>
+    </span>
+</li>

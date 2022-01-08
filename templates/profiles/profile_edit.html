@@ -1,0 +1,27 @@
+{% extends '_card.html' %}
+
+{% load profile_extras %}
+
+{% block title %} Settings {% endblock title %}  
+
+{% block card_body %}
+<p class="help">
+Current Image:
+</p>
+<div>
+    <img src='{{user.profile.avatar.url}}' alt='No Image' style='border-radius: 50%'>
+</div>
+
+<div data-controller="prefs">
+    <form action="" method="post" enctype='multipart/form-data'>
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value='Save' class='btn btn-primary float-right'>
+    </form>
+
+</div>
+
+
+
+
+{% endblock card_body %}

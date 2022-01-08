@@ -1,0 +1,13 @@
+{% extends '_card.html' %}
+
+{% block title %} Categories {% endblock title %}  
+
+{% block card_body %}
+
+<div data-controller="categories">
+<ul id="categories" class="categories">
+</ul>
+<button class="btn btn-info btn-pill float-right" data-action="categories#createNewCategory">New</button>
+</div>
+
+{% endblock card_body %}

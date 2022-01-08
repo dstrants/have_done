@@ -1,0 +1,36 @@
+---
+name: build-statics
+
+on:
+  push:
+    branches:
+      - master 
+
+jobs:
+  statics:
+    # Containers must run in Linux based operating systems
+    runs-on: ubuntu-latest
+
+    # Docker Hub image that `container-job` executes in
+    container: node:16.5.0
+
+    steps:
+      # Downloads a copy of the code in your repository before running CI tests
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: yarn install
+      
+      - name: Build bundles
+        run: yarn build --mode production --optimization-minimize
+            
+      - name: Push bundle
+        uses: jakejarvis/s3-sync-action@master
+        env:
+          AWS_S3_BUCKET: ${{ secrets.SCALEWAY_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.SCALEWAY_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SCALEWAY_SECRET_ACCESS_KEY }}
+          AWS_S3_ENDPOINT: 'https://s3.fr-par.scw.cloud'
+          AWS_REGION: 'fr-par'
+          SOURCE_DIR: 'dist'

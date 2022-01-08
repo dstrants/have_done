@@ -1,0 +1,374 @@
+// Here you can add other styles
+@import url('https://fonts.googleapis.com/css?family=Fira+Code:300,400,500,600,700&display=swap');
+
+input[type=color]{
+  border: none;
+  background-color: inherit;
+}
+
+input:not([type=color]):not([type=submit]){
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid $primary;
+  border-radius: 0;
+  padding: 2px 20px;
+  &[type=text], &[type=number]{
+    &:focus{
+      outline: none;
+    }
+  }
+  &[type=number]{
+    -moz-appearance: textfield;
+  }
+  &::-webkit-outer-spin-button, &::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+.c-app.c-dark-theme {
+    color: #e1e1e1;
+    background-color: #0a0b18;
+    .c-header {
+      background: #2c2c34;
+      border-bottom: 0;
+      .c-header-nav .c-header-nav-link,
+      .c-header-nav .c-header-nav-btn,
+      button {
+        color: rgba(255, 255, 255, 0.75);
+      }
+    }
+    .c-sidebar {
+      color: #e1e1e1;
+      background: #2c2c34;
+      border: 0;
+      .c-sidebar-brand {
+        background: rgba(0, 0, 21, 0.2);
+      }
+    }
+    .card {
+      background-color: #23242d;
+      border-color: #181924;
+    }
+    .card-header {
+      background-color: #20202a;
+      border-color: #181924;
+    }
+    .card-footer {
+      background-color: #23242d;
+      border-color: #181924;
+    }
+    .c-footer {
+      color: #e1e1e1;
+      background: #1e1e29;
+      border-top: 1px solid #181924;
+    }
+    .table,
+    caption,
+    #export {
+      color: #fff;
+    }
+  
+    input:not([type=submit]){
+      background-color: transparent !important;
+      color: white;
+      border-radius: 4px;
+    }
+
+    .btn-pill{
+      border-radius: 50em !important;
+    }
+  
+    .form-control {
+      background: #20202a;
+      color: white;
+    }
+  
+    .dropdown-menu,
+    .no-results {
+      background: #23242d;
+      color: white;
+    }
+  
+    .dropdown-item.active,
+    .dropdown-item:active,
+    .dropdown-item:hover,
+    .dropdown-item:focus {
+      background: #20202a;
+    }
+  
+    .daterangepicker {
+      background-color: #20202a;
+      border-color: #20202a;
+      .calendar-table {
+        background-color: #20202a;
+        border: none;
+        border-radius: 4px;
+        .next span,
+        .prev span {
+          color: #fff;
+          border: solid white;
+          border-width: 0 2px 2px 0;
+          border-radius: 0;
+          display: inline-block;
+          padding: 3px;
+        }
+      }
+      table {
+        background: #23242d;
+        border: none;
+  
+        tr {
+          background: #23242d;
+          .off.ends.available {
+            background: #1c1d28;
+          }
+          &.available:hover,
+          th.available:hover {
+            background-color: #a061b2;
+            border-color: transparent;
+            color: white;
+          }
+          .in-range {
+            background-color: #343645;
+            border-color: transparent;
+            color: #fff;
+            border-radius: 0;
+          }
+          td.active,
+          td.active:hover {
+            background-color: #a061b2;
+            border-color: transparent;
+            color: #fff;
+          }
+        }
+      }
+      &::before {
+        border-bottom: 7px solid #20202a;
+      }
+      &::after {
+        border-bottom: 6px solid #20202a;
+      }
+    }
+  }
+
+.xp-today{
+  .xp-total{
+    font-size: 16px;
+    font-weight: 800;
+  }
+}
+
+
+.hidden{
+  display: none !important;
+}
+
+.new_task{
+    box-shadow: none;
+    width: 80%;
+}
+
+.tasks ul li{
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    padding-top: 5px;
+}
+
+.tasks ul li span.project{
+    color: blue;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.tasks ul li span.tsk-text a{
+    color: inherit;
+    p{
+      display: inline;
+    }
+}
+
+.btn-refresh{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px; 
+    svg{
+      margin: auto;
+      display: flex;
+      vertical-align: middle;
+    }
+}
+.google-icon{
+    color: #ea4335;
+    position: relative;
+    top: -40px;
+}
+.uptime li{
+    display: grid;
+    grid-template-columns: 60% 30%;
+}
+
+
+.pr_icon{
+    height: 30px;
+    width: 30px;
+}
+.pr_title{
+    margin: auto;
+    font-size: 12px;
+    font-family: 'Fira Code', monospace;
+}
+
+.pr_title a{
+    font-weight: 600;
+}
+
+.pr_title a:hover{
+    text-decoration: none;
+}
+
+.previous{
+    position: absolute;
+    left: 0;
+    top: 50%;
+}
+
+.next{
+    position: absolute;
+    right: 0;
+    top: 50%;
+}
+
+.week_stats div .card{
+    height: 100%
+}
+
+.addon:hover{
+    text-decoration: none;
+}
+
+.task-addon-card{
+  background: #f4f4f4;
+  color: white;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 4px;
+  
+  z-index: 10;
+  
+  .arrow, .arrow::before{
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    z-index: -1;
+  }
+
+  .arrow::before{
+    content: "";
+    transform: rotate(45deg);
+    background-color: #f4f4f4;
+    bottom: 10px;
+    left: -150px;
+  }
+}
+
+a.js-action{
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: $primary;
+  &:hover{
+    font-style: italic;
+    border-bottom: 2px dotted $success;
+  }
+}
+
+.blur{
+  filter: blur(6px);
+  -webkit-filter: blur(6px);
+}
+
+.tsk-text a code {
+  color: #e83e8c;
+  background-color: lightgray;
+  border-radius: 2px;
+  padding: 2px;
+}
+
+.event_grid {
+  width: 80%;
+}
+
+.provider {
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 10px;
+
+  padding: 50px;
+  margin: 10px;
+  display: flex;
+  flex: 0 1;
+  flex-direction: column;
+
+  & span{
+    margin-bottom: 15px;
+    & div{
+      width: 50px !important;
+    }
+  }
+
+  & a{
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-align: center;
+    text-transform: uppercase;
+    color: $dark;
+  }
+}
+
+#repo_search{
+  width: 90%
+}
+
+.repos{
+  justify-content: space-between;
+  .repo{
+    padding: 1.5rem;
+    box-shadow: 5px 5px #f4f4f4;
+    border-radius: 10px;
+    border: 1px solid #f1f1f1;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  
+    .repo_name{
+      font-family: 'Fira Code', monospace;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .repo-status{
+      .btn-watch{
+        display: none;
+      }
+    }
+
+    &:hover{
+      .repo-status{
+        .btn-watch{
+          display: inline-block;
+        }
+        .icon{
+          display: none;
+        }
+      }
+    }
+  }
+}

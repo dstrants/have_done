@@ -1,0 +1,18 @@
+{% extends '_card.html' %}
+
+{% block title %} Addon Providers {% endblock title %}  
+
+{% block card_body %}
+
+
+<div class="row" data-controller='providers'>
+    {% for prov in object_list %}
+        <div class="col-md-3 provider">
+            <span data-providers-target='icon' class='provider_icon' data-icon="{{prov.icon}}"></span>
+            <a href="{% url 'prod:providers_update' prov.id %}"> {{prov.name}} </a>
+        </div>
+    {% endfor %}
+</div>
+
+
+{% endblock card_body %}

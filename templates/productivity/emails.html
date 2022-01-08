@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+.card{
+    height: 100%;
+}
+</style>
+<div data-controller='emails' class="row justify-content-center my-4">
+    <div class="col-md-12 col-lg-8">
+    <div class="card">
+        <div class="card-header">Pending Emails</div>
+        <div class="card-body">
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th scope='col'>#</th>
+                        <th scope='col'>Subject</th>
+                        <th scope='col'>From</th>
+                        <th scope='col'>Received At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for email in mails %}
+                    <tr>
+                        <td scope='row'>{{forloop.counter}}</td>
+                        <td>{{email.subject}}</td>
+                        <td>{{email.from_address}}</td>
+                        <td>{{email.created_at}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+    <button data-action='emails#fetchMails' class='btn btn-info btn-refresh'>
+        <i class="fas fa-sync"></i>
+    </button>
+</div>
+{% endblock content %}

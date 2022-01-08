@@ -1,0 +1,6 @@
+<select class="field-container" name="category" id="category_update" data-action='tasks#taskFastUpdate' data-field='category_id'>
+    <option disabled selected value>❓ category</option>
+{% for category in categories %}
+    <option value="{{category.id}}"> {{category.emoji}} {{category.name}}</option>
+{% endfor %}
+</select>

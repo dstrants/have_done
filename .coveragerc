@@ -1,0 +1,15 @@
+[run]
+omit =
+    # omit anything in a virtualenv directory anywhere
+    */venv/*
+    **/migrations/**
+    **/tests/**
+    **/templatetags/**
+    **/__init__.py
+    **/urls.py
+    **/admin.py
+    **/serializers.py
+    backups/config.py
+    backups/settings.py
+    conftest.py
+    manage.py

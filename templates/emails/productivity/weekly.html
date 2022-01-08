@@ -1,0 +1,21 @@
+<h1>Weekly Task Report</h1>
+
+<h2>Statistics</h2>
+
+<ul>
+    <li><strong>Total tasks</strong>: {{stats.task_count}} ( {{stats.task_count_ratio}}% of target)</li>
+    <li><strong>Best Project</strong>: <strong style="color: #{{stats.max_project.0.color}}">{{stats.max_project.0.name}}</strong> ({{stats.max_project.1}})</li>
+    <li><strong>Best Category</strong>: {{stats.max_category.0.emoji}} - {{stats.max_category.0.name}} ({{stats.max_category.1}})</li>
+    <li><strong>Best Day</strong>: {{stats.max_day.0}} ({{stats.max_day.1}})</li>
+</ul>
+
+<h2>Daily Stats</h2>
+<ul>
+    {% for day, tasks in stats.days.items %}
+        <li><strong>{{day}}</strong>: {{tasks.count}}</li>
+    {% endfor %}
+</ul>
+
+<p>
+Check the <a href="https://backups.p.strdi.me/prod/week">dashboard</a> for the interactive version of this email.
+</p>

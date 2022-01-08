@@ -1,0 +1,11 @@
+.git/
+.codeclimate.yml
+.gitignore
+.travis.yml
+db.sqlite3
+env
+readme.md
+venv/
+node_modules/
+nginx/
+.env

@@ -1,0 +1,79 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:12
+    env_file:
+      - '.env'
+    volumes:
+     - backups_db_data:/var/lib/postgresql/data
+  web:
+    image: dstrants/backups_web
+    command: bash -c "python manage.py migrate && gunicorn backups.wsgi:application --timeout 60 -w 2 -b :8000"
+    volumes:
+      - ./media:/app/media
+    env_file:
+      - '.env'
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 2
+        delay: 30s
+        monitor: 2m
+        order: start-first
+      rollback_config:
+        parallelism: 1
+        order: stop-first
+      restart_policy:
+        condition: on-failure
+  nginx:
+    image: dstrants/backups_nginx:stable
+    ports:
+      - "84:443"
+      - "83:80"
+    volumes:
+      - .:/app
+  dramatiq:
+    image: dstrants/backups_web
+    command: bash -c "python manage.py rundramatiq"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    env_file:
+      - '.env'
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 30s
+        monitor: 2m
+        order: start-first
+      rollback_config:
+        parallelism: 1
+        order: stop-first
+  periodiq:
+    image: dstrants/backups_web
+    command: bash -c "python manage.py runperiodiq"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - dramatiq
+    env_file:
+      - '.env'
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 30s
+        monitor: 2m
+        order: start-first
+      rollback_config:
+        parallelism: 1
+        order: stop-first
+  redis:
+    image: redis
+
+volumes:
+  backups_db_data:

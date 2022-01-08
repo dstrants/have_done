@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<style>
+.card{
+    height: 100%;
+}
+#eventslist li{
+    margin: 10px;
+}
+</style>
+<div class="container" data-controller="home">
+    <div class="row my-5">
+        <div class="col-md-8 col-sm-12 my-3">
+            <div class="card">
+                <div class="card-header">Done Today <a href="{% url 'prod:today' %}" class="btn btn-outline-primary btn-sm float-right">Go</a></div>
+                    <div class="card-body">
+                        <ul class='list-unstyled'>
+                            {% for task in tasks %}
+                                <li class='tsk {{task.project.name}}'> {{task.category.emoji}} 
+                                    <span class="tsk-text" style="display: inline-block;">
+                                        {{task.rich_text|safe}} 
+                                    </span>
+                                    <span class='project' style='color: #{{task.project.color}}'>
+                                        {{task.project}}
+                                    </span>
+                                    <span class='addons ml-3 d-block'>
+                                        {% if task.taskaddon_set.all %}
+                                            {% for addon in task.taskaddon_set.all %}
+                                            <a target="_blank" href='{{addon.url}}' class="addon py-0">
+                                                <img class='simpleicon' data-action='load->tasks#fixSimpleIconColor' data-color="#{{addon.provider.color}}"
+                                                    height="16" width="16"
+                                                    src="https://unpkg.com/simple-icons@v2/icons/{{addon.provider.icon}}.svg" />
+                                            </a>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </span>
+                                </li>
+                                {% empty %}
+                                <li><i>No tasks logged yet</i></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12 my-3">
+            <div class="card">
+                <div class="card-header">
+                    Backups Status
+                    <a href="{% url 'logs:backups'%}" class="btn btn-outline-primary btn-sm float-right">See All</a>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        {% for app,st in status.items %}
+                            <li><b>{{app}}</b>: {% if st %} <i class="fas fa-check text-success"></i> {% else %} <i class="fas fa-times text-danger"></i> {% endif %}</li>
+                        {% empty%}
+                            <li><i>No backups logged yet</i></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12 my-3 {% if not user.profile.settings.gh_pr %}hidden{%endif%}">
+            <div class="card">
+                <div class="card-header">
+                    Pending PRs
+                    <a class='btn btn-primary btn-sm float-right' style='color: #fff' data-action="home#forcePRList">
+                        <i class="fas fa-sync"></i>
+                    </a>
+                </div>
+                <div id="prs" class="card-body" data-home-target="ghPrContainer"></div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12 my-3 {% if not user.profile.settings.gcalendar %}hidden{%endif%}">
+            <div class="card">
+                <div class="card-header">
+                    Coming Events
+                    <a class='btn btn-primary btn-sm float-right' style='color: #fff' data-action="home#GoogleCalendar">
+                        <i class="fas fa-sync"></i>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled" data-home-target="gCalendarContainer" id='eventsList'>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12 my-3 {% if not user.profile.settings.uptime_robot %}hidden{%endif%}">
+            <div class="card">
+                <div class="card-header">Pages Status</div>
+                <div id='uptime' class="card-body" data-home-target="upTimeContainer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

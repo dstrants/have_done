@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>BackUp Logs</title>
+    {% load static %}
+    {% load logs_extras %}
+    {% load profile_extras %}
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+    <link rel="shortcut icon" href="/upload/favicon.png" type="image/x-icon">  
+    <script src="{% static 'main.js' %}"></script>
+  </head>
+  <body class="c-app">
+  <div class="c-wrapper">
+      <header data-controller='theme' class="c-header c-header-light px-3">
+        <a class="c-header-brand">BackUp</a>
+        <ul class="c-header-nav mr-auto">
+          <li class="c-header-nav-item">
+            <a class="c-header-nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+           <li class="c-header-nav-item dropdown">
+            <a class="c-header-nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+              Productivity
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'prod:today' %}">Today</a>
+              <a class="dropdown-item" href="{% url 'prod:this_week' %}">Week</a>
+              <a class="dropdown-item" href="{% url 'prod:defaults' %}">Defaults</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'prod:mails' %}">Emails</a>
+              <div class="dropdown-divider"></div>
+              <a href="{% url 'prod:providers_list' %}" class="dropdown-item">Addon Templates</a>
+              <a href="{% url 'prod:categories' %}" class="dropdown-item"> Categories</a>
+              <a href="{% url 'prod:projects' %}" class="dropdown-item"> Projects</a>
+            </div>
+          </li>
+          <li class="c-header-nav-item dropdown">
+            <a class="c-header-nav-link dropdown-toggle" id="integrationsDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+              Integrations
+            </a>
+            <div class="dropdown-menu" aria-labelledby="integrationsDropdown">
+              <a href="{% url "sync:github" %}" class="dropdown-item">Github</a>
+              <a class="dropdown-item" href="{% url 'sync:todoist' %}">Todoist</a>
+            </div>
+          </li>
+          <li class="c-header-nav-item"><a href="/admin" class="c-header-nav-link">Admin</a></li>
+        </ul>
+        <ul class="c-header-nav mfs-auto">
+          <li class="c-header-nav-item">
+            <button data-theme-target='switch' data-action='theme#switchTheme'  id='dark' class="c-header-nav-btn mr-2" data-toggle="tooltip" data-placement="bottom" title="Toggle Ligth/Dark Mode">
+              <i class="fas fa-moon" style='width:16px; height:16px;'></i>
+            </button>
+          </li>
+          {% user_notifications user as notifications%}
+          <li class="c-header-nav-item dropdown">
+            <a class="c-header-nav-btn mr-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell" style='width:18px; height:18px;'></i>
+                {% if notifications %}
+                  <span class="badge badge-danger mfs-auto">{{notifications.count}}</span>
+                {% endif %}
+            </a>
+            <div class="dropdown-menu dropdown-menu-right pt-0">
+              {% for notif in notifications %}
+                <a class="dropdown-item" href="{{ notif.get_absolute_url }}">
+                  {{notif.text}}
+                </a>
+              {% empty %}
+                <a class="dropdown-item"><i>No unread notifications</i></a>
+              {% endfor %}
+            </div>
+          </li>
+          <li class="c-header-nav-item dropdown">
+            <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              <div class="c-avatar">
+                <img class="c-avatar-img" src="{% if user.profile.avatar %} {{user.profile.avatar.url}} {% else %} /upload/avatar.png {% endif %}" alt="user@email.com">
+              </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right pt-0">
+              <div class="dropdown-header bg-light py-2">
+                <strong>Account</strong>
+              </div>
+              <a class="dropdown-item" href="{% url 'prod:mails' %}">
+                <i class="fas fa-envelope c-icon mfe-2"></i>
+                Emails
+                <span class="badge badge-danger mfs-auto">{% load_mail %}</span>
+              </a>
+              <div class="dropdown-header bg-light py-2">
+                <strong>Settings</strong>
+              </div>
+              <a class="dropdown-item" href="{% url 'profiles:settings'%}">
+                <i class="fas fa-cog c-icon mfe-2"></i>
+                Settings
+              </a>
+              <a class="dropdown-item" href="{% url 'profiles:settings'%}">
+                <i class="fas fa-code-branch c-icon mfe-2"></i>
+                {% version %}
+              </a>
+            <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'admin:logout' %}">
+                <i class="fas fa-sign-out-alt c-icon mfe-2"></i>
+                Logout
+              </a>
+          </div>
+        </li>
+      </ul>
+    </header>
+    <div class="container-fluid">
+    {% block content %}
+    
+    {% endblock content %}
+    </div>
+  </div>
+    <script async src="https://kit.fontawesome.com/51ae16f369.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+    {% block script %}
+
+    {% endblock script %}
+  </body>
+</html>

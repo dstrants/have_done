@@ -1,0 +1,15 @@
+Weekly Task Report
+
+Statistics
+    Total tasks: {{stats.task_count}} ( {{stats.task_count_ratio}}% of target)
+    Best Project: {{stats.max_project.0.name}} ({{stats.max_project.1}})
+    Best Category: {{stats.max_category.0.emoji}} - {{stats.max_category.0.name}} ({{stats.max_category.1}})
+    Best Day: {{stats.max_day.0}} ({{stats.max_day.1}})
+
+Daily Stats
+    {% for day, tasks in stats.days.items %}
+    > {{day}}: {{tasks.count}}
+    {% endfor %}
+
+
+Check the dashboard (https://backups.p.strdi.me/prod/weekdashboard) for the interactive version of this email.

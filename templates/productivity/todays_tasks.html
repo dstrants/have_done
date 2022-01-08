@@ -1,0 +1,50 @@
+<div>
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-secondary active" data-action="click->tasks#filterProjectTasks" data-tasks-name="all">
+            <input type="radio" name="options" id="all" autocomplete="off" checked> All
+        </label>
+        {% for project in pro %}
+        <label class="btn btn-secondary" data-action="click->tasks#filterProjectTasks"
+            data-tasks-name="{{project.name}}">
+            <input type="radio" name="options" id="{{project.name}}" autocomplete="off"> {{project.name.capitalize}}
+        </label>
+        {% endfor %}
+    </div>
+    <ul class='list-unstyled' id='task-list'>
+        {% for task in tasks %}
+            {% ifchanged task.category %}
+                <br>
+                <h4>{{task.category.name.capitalize}}</h4>
+            {% endifchanged %}
+            {% include "productivity/_task.html" %}
+        {% empty %}
+        <li>
+            <i>Not tasks found...</i>
+        </li>
+        {% endfor %}
+        <br>
+        {% if today %}
+            <h4>New task</h4>
+            <li class='ml-3'>
+                <span data-tasks-target='emoji' id='tasks.emoji'>
+                    <i class="fas fa-plus-circle"></i>
+                </span>
+
+                <input type="hidden" name="category_id" id='cat' data-tasks-target='category' value="">
+                <input type="hidden" name="project_id" id='proj' data-tasks-target='project' value="">
+                <input type="text" class='new_task' placeholder='Add new task' data-tasks-target='task'
+                    data-action="keypress->tasks#searchProject keypress->tasks#searchCategory keypress->tasks#createTask"
+                    id='add_task' autofocus>
+                <a id='pro_name' data-tasks-target='projectName'></a>
+            </li>
+            <li class='ml-3'>
+                <p>
+                    New Project: <kbd>n</kbd> <kbd>l</kbd>
+                    New Category: <kbd>n</kbd> <kbd>k</kbd>
+                    New Task: <kbd>n</kbd> <kbd>t</kbd>
+                </p>
+                <p id="help"></p>
+            </li>
+        {% endif %}
+    </ul>
+</div>

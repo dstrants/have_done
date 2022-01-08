@@ -1,0 +1,20 @@
+<div class="task-addon-card" data-addons-target="addonCard">
+    <button type="button" class="close" data-action='addons#hide' aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <form class='form-inline' action="{% url 'prod:task_addon' tid %}" method="post">
+        {% csrf_token %}
+        <div class="form-group mb-2">
+            <select class="form-control" name="pid">
+                {% for provider in providers %}
+                <option value="{{provider.id}}">{{provider.name}}</option>
+                {% endfor %}
+            </select>
+            
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <input class="form-control" type="text" name='uid' placeholder='uid or link'>
+        </div>
+    </form>
+    <div data-popper-arrow class='arrow'></div>
+</div>

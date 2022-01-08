@@ -1,0 +1,5 @@
+{% for repo in repos %}
+    {% include "sync/_repo.html" %}
+{% empty %}
+    <li><i>No repositories found...</i></li>
+{% endfor %}

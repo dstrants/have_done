@@ -1,0 +1,24 @@
+{% extends '_card.html' %}
+
+{% block title %}
+Githhub Wizard
+{% endblock title %}
+
+{% block card_body %}
+<h1 class="card-name">Github Configuration</h1>
+
+<div class="container" data-controller='github'>
+
+<div class="row">
+    <div class="col-md-12">
+        <i class="fab fa-github fa-2x"></i>
+        <input type="text" class="input" name="repo_search" id="repo_search" placeholder="Search for github repos" data-action="keydown->github#searchRepos" data-github-target="repoSearch">
+    </div>
+</div>
+
+<div class="row repos" data-github-target='repoList'>
+    {% include "sync/_repo_list.html" %}
+</div>
+
+</div>
+{% endblock card_body %}

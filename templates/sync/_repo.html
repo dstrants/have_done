@@ -1,0 +1,14 @@
+<div class="repo mx-2 my-3 col-md-5 col-sm-12" data-name='{{repo.name}}' data-github-target="repo">
+    <span class="repo_icon{% if repo.private %} private text-warning{% endif %}" data-github-target="repoIcon" ></span>
+    <a class="repo_name" href="https://github.com/{{repo.name}}" target="_blank">{{repo.name}}</a>
+    <span class="repo-status" data-watch="{{repo.watch}}">
+        {% if repo.watch %}
+            <span class="icon">
+                <i class="fas fa-check text-success"></i>
+            </span>
+            <button class="btn btn-danger btn-sm btn-watch" data-repo="{{repo.name}}" data-action="click->github#toggleRepoStatus">Stop Watching</button>
+        {% else %}
+            <button class="btn btn-info btn-sm" data-repo="{{repo.name}}" data-action="click->github#toggleRepoStatus">Watch</button>
+        {% endif %}
+    </span>
+</div>

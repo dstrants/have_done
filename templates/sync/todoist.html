@@ -1,0 +1,58 @@
+{% extends '_card.html' %}
+
+{% block title %}
+Todoist Wizard
+{% endblock title %}
+
+{% block card_body %}
+
+<h1 class="card-name">Projects</h1>
+
+<ul>
+    {% for match in sets.projects %}
+        <li> <span style="color: {{match.0.color_hex}}">{{match.0.name}}</span> -> <span style="color: #{{match.1.color}}">{{match.1}}</span>
+            {% if match.1.todoist_id == match.0.id %} 
+                <span class="badge bg-success rounded-pill"><i class="fas fa-check"></i> Linked</span>
+                <a href="{% url 'sync:todoist-link-project' match.0.id 0 %}" class="btn btn-ghost-warning btn-pill btn-sm">Unlink</a> 
+            {% else %} 
+                <a href="{% url 'sync:todoist-link-project' match.0.id match.1.id %}" class="btn btn-ghost-info btn-pill btn-sm">Link</a> 
+            {% endif %} 
+        </li>
+    {% endfor %}
+</ul>
+
+<h1 class="card-name">Labels</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Todoist Label</th>
+            <th>Category</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for match in sets.categories %}
+            <tr>
+                <td>{{match.0.name}}</td>
+                <td>{{match.1}}</td>
+                <td>
+                    {% if match.1.todoist_id == match.0.id %} 
+                        <span class="badge bg-success rounded-pill"><i class="fas fa-check"></i> Linked</span>
+                        <a href="{% url 'sync:todoist-link-category' match.0.id 0 %}" class="btn btn-ghost-warning btn-pill btn-sm">Unlink</a> 
+                    {% else %} 
+                        <a href="{% url 'sync:todoist-link-category' match.0.id match.1.id %}" class="btn btn-ghost-info btn-pill btn-sm">Link</a> 
+                    {% endif %}
+                
+                </td>
+
+            </tr>  
+    
+        {% endfor %}
+    </tbody>
+
+</table>
+
+
+{% endblock card_body %} 
+

@@ -1,0 +1,19 @@
+version = 1
+
+exclude_patterns = [
+    "migrations/**",
+    "backups/settings.py"
+]
+
+test_patterns = [
+  "**/tests/**",
+  "**/test_*.py"
+]
+
+[[analyzers]]
+name = "python"
+enabled = true
+
+  [analyzers.meta]
+  runtime_version = "3.x.x"
+  max_line_length = 120
