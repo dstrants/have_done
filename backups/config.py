@@ -11,11 +11,10 @@ class BackupsConfig(BaseSettings):
     django_host: Optional[str] = Field(..., env='APP_HOST')
     app_tz: Optional[str] = Field('UTC', env='APP_TZ')
     log_level: str = Field("WARNING", env='LOG_LEVEL')
-    admin_email: str =  Field("django@example.com", env="ADMIN_EMAIL")
+    admin_email: str = Field("django@example.com", env="ADMIN_EMAIL")
     admin_name: str = Field("Django Admin", env="ADMIN_NAME")
     app_from_email: str = Field("noreply@havedone.local", env="HD_FROM_MAIL")
     app_server_email: str = Field("noreply@havedone.local", env="HD_SERVER_MAIL")
-
 
     docker: bool = Field(True, env='DOCKER')
     db_name: str = Field('postgres', env='DB_NAME')
