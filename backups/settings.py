@@ -11,7 +11,7 @@ from backups.config import BackupsConfig
 console = Console()
 cnf = BackupsConfig()
 
-ADMINS = [('Dimitris', 'dstrants@gmail.com')]
+ADMINS = [(cnf.admin_name, cnf.admin_email)]
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = cnf.django_secret
@@ -248,8 +248,8 @@ ANYMAIL = {
     "MAILGUN_API_URL": "https://api.eu.mailgun.net/v3"
 }
 EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
-DEFAULT_FROM_EMAIL = 'noreply@notify.strdi.me'
-SERVER_EMAIL = 'backups@notify.strdi.me'
+DEFAULT_FROM_EMAIL = cnf.app_from_email
+SERVER_EMAIL = cnf.app_server_email
 
 # Database & Media Backups Configuration
 DBBACKUP_CLEANUP_KEEP = 10
