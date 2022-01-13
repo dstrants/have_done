@@ -30,7 +30,7 @@ django-dramatiq = "^0.9.1"
 periodiq = "^0.12.1"
 django-periodiq = {git = "https://github.com/Sovetnikov/django_periodiq"}
 django-anymail = {version = "^8.2", extras = ["mailgun"]}
-Pillow = "^8.1.2"
+Pillow = "^9.0.0"
 django-dbbackup = "^3.3.0"
 dropbox = "^11.5.0"
 django-storages = "^1.11.1"
