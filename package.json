@@ -6,6 +6,7 @@
   "author": "Dimitrios Strantsalis <dstrants@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@coreui/coreui": "3.4.0",
     "@popperjs/core": "^2.11.5",
     "@primer/octicons": "^17.1.0",
     "apexcharts": "^3.35.2",
