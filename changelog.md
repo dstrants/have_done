@@ -1,4 +1,8 @@
 
+## 2022-05-13 07:20:28
+### Fixes
+- Adds back accidentally deleted js dependency
+
 ## 2022-05-13 07:14:12
 ### Upgrades
 - `python` dependencies
